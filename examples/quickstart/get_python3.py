@@ -7,13 +7,16 @@ from io import BytesIO
 
 buffer = BytesIO()
 c = pycurl.Curl()
-c.setopt(c.URL, 'http://pycurl.io/')
+c.setopt(c.URL, 'https://pal2-sap-cvmatcher.cfapps.sap.hana.ondemand.com/cvr/sso')
+c.setopt(c.COOKIEFILE, 'cookie.txt')
+c.setopt(c.COOKIEJAR, 'cookie.txt')
+c.setopt(c.FOLLOWLOCATION, True)
+c.setopt(c.SSL_VERIFYPEER, False)
+c.setopt(c.SSL_VERIFYHOST, False)
 c.setopt(c.WRITEDATA, buffer)
 c.perform()
 c.close()
-
 body = buffer.getvalue()
-# Body is a byte string.
-# We have to know the encoding in order to print it to a text file
-# such as standard output.
 print(body.decode('iso-8859-1'))
+
+#c.setopt(c.URL, 'https://pal2-sap-cvmatcher.cfapps.sap.hana.ondemand.com/cvr/cvfile/5834d464e04ed2001daafed1')
